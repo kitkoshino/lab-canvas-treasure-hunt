@@ -22,6 +22,9 @@ class Character {
     this.col --;
   }
 
+  sumScore() {
+    this.score ++;
+  }
 }
 
 

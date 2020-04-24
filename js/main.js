@@ -53,12 +53,21 @@ function drawPlayer() {
 }
 
 function drawScore() {
+  const scorePlayer1 = document.getElementById('score-player1');
+  const scorePlayer2 = document.getElementById('score-player2');
 
+  scorePlayer1.innerText = player.score;
+  scorePlayer2.innerText = player2.score;
 }
 
 function drawTreasure() {
-  context.drawImage(treasure.image, treasure.col * distanceHeight, treasure.row * distanceWidth , 50, 50);
-
+  context.drawImage(
+    treasure.image,
+    treasure.col * distanceHeight,
+    treasure.row * distanceWidth,
+    50,
+    50
+  );
 }
 
 window.addEventListener('load', () => {
@@ -70,6 +79,7 @@ window.addEventListener('keydown', (event) => {
     case 37:
       if (player.col > 0) {
         player.moveLeft();
+        player.image
         clearCanvas();
         drawGrid();
         drawPlayer();
@@ -141,5 +151,25 @@ window.addEventListener('keydown', (event) => {
         drawTreasure();
       }
       break;
+  }
+  const collided = treasure.checkColision(player);
+  const collided2 = treasure.checkColision(player2);
+
+  if (collided || collided2) {
+    if (collided) {
+      player.sumScore();
+      console.log(player.score);
+    } else {
+      player2.sumScore();
+
+    }
+    drawScore();
+    treasure.setRandomPosition();
+
+    console.log('colisao');
+    clearCanvas();
+    drawGrid();
+    drawPlayer();
+    drawTreasure();
   }
 });
